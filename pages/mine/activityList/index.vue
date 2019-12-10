@@ -13,21 +13,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   // components: {},
   // props: {}
 })
 export default class ActivityList extends Vue {
-  title: string = '我参加的活动'
+  title: string = '我参加的活动';
 
   get count() {
-    return this.$store.state.mine.activityList.count
+    return this.$store.state.mine.activityList.count;
   }
 
   increment() {
-    this.$store.commit('mine/activityList/increment')
+    this.$store.commit('mine/activityList/increment');
   }
 }
 </script>

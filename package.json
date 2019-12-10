@@ -1,7 +1,7 @@
 {
   "name": "nuxt_vue_ts",
   "version": "1.0.0",
-  "description": "My astounding Nuxt.js project",
+  "description": "物美后台管理系统",
   "author": "chaoge",
   "private": true,
   "scripts": {

@@ -75,7 +75,7 @@
   </el-dialog>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   props: {
@@ -95,7 +95,7 @@ export default {
       detail: {
         csId: undefined
       }
-    }
+    };
   },
   computed: {
     ...mapGetters({
@@ -103,12 +103,12 @@ export default {
     })
   },
   mounted() {
-    this.pageData.mode = this.config.mode
-    this.pageData.visible = this.config.visible
-    this.pageData.title = this.config.title
+    this.pageData.mode = this.config.mode;
+    this.pageData.visible = this.config.visible;
+    this.pageData.title = this.config.title;
     if (this.config.mode === 'edit') {
-      this.detail.sku = this.config.data.sku
-      this.detail.grossMarginRatio = this.config.data.grossMarginRatio
+      this.detail.sku = this.config.data.sku;
+      this.detail.grossMarginRatio = this.config.data.grossMarginRatio;
     }
   },
   created() {
@@ -120,34 +120,34 @@ export default {
     ]),
     // 初始化页面数据
     initFunc() {
-      const params = {}
+      const params = {};
       const loading = this.$loading({
         lock: true,
         spinner: 'wm-icon-loading',
         background: 'rgba(0, 0, 0, 0.3)'
-      })
+      });
       this.$Axios
         .get(this.$Urls.POST_WMOPERCHECK_OPERORG_INIT, params)
         .then(res => {
           setTimeout(() => {
-            loading.close()
-          }, 500)
+            loading.close();
+          }, 500);
           if (res.code === '0000') {
-            this.pageData.operOrgList = res.data.operOrgList
-            this.pageData.userInfo = res.data.userInfo
+            this.pageData.operOrgList = res.data.operOrgList;
+            this.pageData.userInfo = res.data.userInfo;
 
             if (res.data.userInfo.orgNo) {
-              this.detail.orgNos = []
-              this.detail.orgNos.push(res.data.userInfo.orgNo)
+              this.detail.orgNos = [];
+              this.detail.orgNos.push(res.data.userInfo.orgNo);
             }
           } else {
-            this.$message.error(res.result)
+            this.$message.error(res.result);
           }
         })
         .catch(() => {
-          loading.close()
-          this.$message.error('初始化页面数据失败！')
-        })
+          loading.close();
+          this.$message.error('初始化页面数据失败！');
+        });
     },
     saveEvt() {
       const params = {
@@ -157,35 +157,35 @@ export default {
         endDate: this.detail.endDate,
         currentPage: this.detail.currentPage,
         pageSize: this.detail.pageSize
-      }
+      };
       const loading = this.$loading({
         lock: true,
         spinner: 'wm-icon-loading',
         background: 'rgba(0, 0, 0, 0.3)'
-      })
+      });
       this.$Axios
         .post(this.$Urls.POST_CHECKLOG_QUERYLIST, params)
         .then(res => {
           setTimeout(() => {
-            loading.close()
-          }, 500)
+            loading.close();
+          }, 500);
           if (res.code === '0000') {
-            this.config.visible = false
-            this.$emit('callback', true)
+            this.config.visible = false;
+            this.$emit('callback', true);
           } else {
-            this.$message.error(res.result)
+            this.$message.error(res.result);
           }
         })
         .catch(() => {
-          loading.close()
-          this.$message.error('保存失败')
-        })
+          loading.close();
+          this.$message.error('保存失败');
+        });
     },
     closeEvt() {
-      this.config.visible = false
-      this.$emit('callback', false)
+      this.config.visible = false;
+      this.$emit('callback', false);
     }
   }
-}
+};
 </script>
 <style lang="less" scoped></style>

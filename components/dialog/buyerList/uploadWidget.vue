@@ -52,7 +52,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   props: {
@@ -73,7 +73,7 @@ export default {
         action: undefined,
         list: []
       }
-    }
+    };
   },
   computed: {
     ...mapGetters({
@@ -81,7 +81,7 @@ export default {
     })
   },
   mounted() {
-    this.pageData.visible = this.visible
+    this.pageData.visible = this.visible;
   },
   created() {
     // this.initFunc();
@@ -91,11 +91,11 @@ export default {
       // 'setLoading'
     ]),
     downloadEvt() {
-      window.location.href = '/static/files/仓位商品库存导入模板.xlsx'
+      window.location.href = '/static/files/仓位商品库存导入模板.xlsx';
     },
     submitUpload() {
-      this.$refs.upload.submit()
-      this.closeEvt()
+      this.$refs.upload.submit();
+      this.closeEvt();
     },
     handleRemove(file, fileList) {
       // console.log(file, fileList);
@@ -104,10 +104,10 @@ export default {
       // console.log(file);
     },
     closeEvt() {
-      this.visible = false
-      this.$emit('callback')
+      this.visible = false;
+      this.$emit('callback');
     }
   }
-}
+};
 </script>
 <style lang="less" scoped></style>

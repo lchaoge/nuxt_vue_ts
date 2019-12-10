@@ -1,17 +1,25 @@
+/*
+ * Description: vuex-index.js
+ * User: chaoge
+ * Date: 2018/04/16
+ */
+
 import Vue from 'vue'
-import Vuex from 'vuex'
+import VueX from 'vuex'
+import mutations from './mutations'
+import actions from './actions'
+import getters from './getters'
+import state from './state'
 
-import modules from './modules'
+Vue.use(VueX)
 
-Vue.use(Vuex)
-const store = () =>
-  new Vuex.Store({
-    modules,
-    state: {},
-    getters: {},
-    mutations: {},
-    actions: {},
-    plugins: [],
-    strict: process.env.NODE_ENV !== 'production'
+const store = () => {
+  return new VueX.Store({
+    actions,
+    mutations,
+    getters,
+    state
   })
+}
+
 export default store

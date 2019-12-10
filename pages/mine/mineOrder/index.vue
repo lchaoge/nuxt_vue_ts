@@ -15,25 +15,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   // components: {},
   // props: {}
 })
 export default class MineOrder extends Vue {
-  title: string = '我的订单'
+  title: string = '我的订单';
 
   mounted() {
-    this.getData()
+    this.getData();
   }
 
   get orderData() {
-    return this.$store.state.mine.mineOrder.data
+    return this.$store.state.mine.mineOrder.data;
   }
 
   getData() {
-    this.$store.dispatch('mine/mineOrder/getOrder')
+    this.$store.dispatch('mine/mineOrder/getOrder');
   }
 }
 </script>

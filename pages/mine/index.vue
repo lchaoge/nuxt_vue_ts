@@ -13,21 +13,21 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator';
 
 @Component({
   // components: {},
   // props: {}
 })
 export default class MineHome extends Vue {
-  title: string = '个人中心'
+  title: string = '个人中心';
 
   get count() {
-    return this.$store.state.demo.count
+    return this.$store.state.demo.count;
   }
 
   increment() {
-    this.$store.commit('demo/increment')
+    this.$store.commit('demo/increment');
   }
   // computed: {
   //   ...mapState('demo', {

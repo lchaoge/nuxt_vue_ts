@@ -45,13 +45,13 @@ module.exports = {
     '~/assets/css/main.less'
   ],
   styleResources: {
-    less: [],
+    less: []
     // sass: ...
   },
   /*
    ** Plugins to load before mounting the App
    */
-  plugins: ['~/plugins/element-ui', '~/plugins/axios'],
+  plugins: [{ src: '~/plugins/element-ui', ssr: true }, '~/plugins/axios'],
   /*
    ** Nuxt.js dev-modules
    */
@@ -93,7 +93,7 @@ module.exports = {
         '^/operplat': ''
       }
     },
-    '/api':{
+    '/api': {
       target:
         process.env.NODE_ENV === 'production'
           ? 'http://server.kooshua.com'
@@ -115,4 +115,4 @@ module.exports = {
     vendor: ['@nuxtjs/axios', '@nuxtjs/proxy', 'element-ui'],
     extend(config, ctx) {}
   }
-}
+};
