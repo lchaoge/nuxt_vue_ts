@@ -3,8 +3,8 @@
     <div class="wmui-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item>批量开票</el-breadcrumb-item>
-        <el-breadcrumb-item>购方列表</el-breadcrumb-item>
+        <el-breadcrumb-item>模块名称</el-breadcrumb-item>
+        <el-breadcrumb-item>列表名称</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
 
@@ -35,7 +35,6 @@
                   v-model="tableObj.csId"
                   placeholder="请输入购方编号"
                   clearable
-                  @change="resetPage"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -46,7 +45,6 @@
                   v-model="tableObj.csId"
                   placeholder="请输入购方编号"
                   clearable
-                  @change="resetPage"
                 ></el-input>
               </el-form-item>
             </el-col>
@@ -58,7 +56,6 @@
                   clearable
                   filterable
                   placeholder="请选择可用性"
-                  @change="resetPage"
                 >
                   <el-option
                     v-for="item in pageData.reasonList"
@@ -160,6 +157,7 @@
         type="success"
         show-icon
         :closable="false"
+        effect="dark"
       />
       <el-table
         v-loading="tableLoading"
@@ -359,9 +357,13 @@ export default class DemoPage extends Vue {
   queryEvt(startFlag = true) {
     this.selectedRow.splice(0, this.selectedRow.length);
     this.tableLoading = true;
+    if (startFlag) {
+      this.pagination.currentPage = 1;
+    }
     const params = {
       orgNo: this.tableObj.orgNo,
       csId: this.tableObj.csId,
+      reason: this.tableObj.reason,
       startDate: this.tableObj.startDate,
       endDate: this.tableObj.endDate,
       pageNum: this.pagination.currentPage,
@@ -392,30 +394,23 @@ export default class DemoPage extends Vue {
     } else {
       this.tableObj.orgNo = undefined;
     }
+    this.tableObj.csId = undefined; // 批次号
+    this.tableObj.reason = undefined;
     this.tableObj.startDate = undefined; // 开始日期
     this.tableObj.endDate = undefined; // 结束日期
-    this.tableObj.csId = undefined; // 批次号
     this.pageData.dateArr = [];
-    this.resetPage();
-  }
-  resetPage() {
-    this.tableObj.currentPage = 1;
-    this.tableObj.pageSize = 10;
-    this.tableObj.pageCount = 1; // 多少页
-    this.tableObj.rowCount = 1; // 总数
   }
   // 每页条数改变
-  sizeChangeEvt(val) {
-    this.tableObj.pageSize = val; // 单页行数
+  sizeChangeEvt(value) {
+    this.pagination.pageSize = value; // 单页行数
     this.queryEvt();
   }
   // 当前页改变
-  currentChangeEvt(val) {
-    this.tableObj.currentPage = val; // 当前页
-    this.queryEvt();
+  currentChangeEvt(value) {
+    this.pagination.currentPage = value; // 当前页
+    this.queryEvt(false);
   }
   dateArrChange(value) {
-    this.resetPage();
     if (value) {
       this.tableObj.startDate = value[0]; // 查询起始日期
       this.tableObj.endDate = value[1]; // 查询结束日期
