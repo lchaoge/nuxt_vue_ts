@@ -1,13 +1,13 @@
 <template>
   <el-main class="page-index">
-    <div class="wmui-breadcrumb">
+    <section class="wmui-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ name: 'homeLink' }">首页</el-breadcrumb-item>
       </el-breadcrumb>
-    </div>
+    </section>
 
-    <div class="wmui-table-box">
-      <h1 class="wm-title-h1">物美发票后台管理系统</h1>
+    <section class="wmui-table-box">
+      <h1 class="wm-title-h1">物美后台管理系统</h1>
       <el-calendar v-model="pageData.datetime"></el-calendar>
       <el-row :gutter="10">
         <el-col :span="6">
@@ -23,7 +23,7 @@
           <el-link icon="el-icon-download" type="primary">使用手册</el-link>
         </el-col>
       </el-row>
-    </div>
+    </section>
   </el-main>
 </template>
 

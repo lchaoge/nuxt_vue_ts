@@ -74,34 +74,26 @@
     </el-form>
   </el-dialog>
 </template>
-<script>
-import { mapActions, mapGetters } from 'vuex';
-
-export default {
+<script lang="ts">
+import { Vue, Component, Emit } from 'vue-property-decorator';
+@Component({
   props: {
-    config: {
-      type: Object,
-      required: true
-    }
+    config: Object
   },
-  data() {
-    return {
-      pageData: {
-        formLabelWidth: '120px',
-        visible: false,
-        mode: 'add',
-        title: undefined
-      },
-      detail: {
-        csId: undefined
-      }
-    };
-  },
-  computed: {
-    ...mapGetters({
-      // 'setLoading'
-    })
-  },
+  watch: {},
+  components: {}
+})
+export default class BuyerListDialogWidget extends Vue {
+  pageData: any = {
+    formLabelWidth: '120px',
+    visible: false,
+    mode: 'add',
+    title: undefined
+  };
+  detail: any = {
+    csId: undefined
+  };
+
   mounted() {
     this.pageData.mode = this.config.mode;
     this.pageData.visible = this.config.visible;
@@ -110,82 +102,80 @@ export default {
       this.detail.sku = this.config.data.sku;
       this.detail.grossMarginRatio = this.config.data.grossMarginRatio;
     }
-  },
+  }
   created() {
     // this.initFunc();
-  },
-  methods: {
-    ...mapActions([
-      // 'setLoading'
-    ]),
-    // 初始化页面数据
-    initFunc() {
-      const params = {};
-      const loading = this.$loading({
-        lock: true,
-        spinner: 'wm-icon-loading',
-        background: 'rgba(0, 0, 0, 0.3)'
-      });
-      this.$Axios
-        .get(this.$Urls.POST_WMOPERCHECK_OPERORG_INIT, params)
-        .then(res => {
-          setTimeout(() => {
-            loading.close();
-          }, 500);
-          if (res.code === '0000') {
-            this.pageData.operOrgList = res.data.operOrgList;
-            this.pageData.userInfo = res.data.userInfo;
-
-            if (res.data.userInfo.orgNo) {
-              this.detail.orgNos = [];
-              this.detail.orgNos.push(res.data.userInfo.orgNo);
-            }
-          } else {
-            this.$message.error(res.result);
-          }
-        })
-        .catch(() => {
-          loading.close();
-          this.$message.error('初始化页面数据失败！');
-        });
-    },
-    saveEvt() {
-      const params = {
-        orgNos: this.detail.orgNos,
-        csId: this.detail.csId,
-        startDate: this.detail.startDate,
-        endDate: this.detail.endDate,
-        currentPage: this.detail.currentPage,
-        pageSize: this.detail.pageSize
-      };
-      const loading = this.$loading({
-        lock: true,
-        spinner: 'wm-icon-loading',
-        background: 'rgba(0, 0, 0, 0.3)'
-      });
-      this.$Axios
-        .post(this.$Urls.POST_CHECKLOG_QUERYLIST, params)
-        .then(res => {
-          setTimeout(() => {
-            loading.close();
-          }, 500);
-          if (res.code === '0000') {
-            this.config.visible = false;
-            this.$emit('callback', true);
-          } else {
-            this.$message.error(res.result);
-          }
-        })
-        .catch(() => {
-          loading.close();
-          this.$message.error('保存失败');
-        });
-    },
-    closeEvt() {
-      this.config.visible = false;
-      this.$emit('callback', false);
-    }
   }
-};
+  // 初始化页面数据
+  initFunc() {
+    const params = {};
+    const loading = this.$loading({
+      lock: true,
+      spinner: 'wm-icon-loading',
+      background: 'rgba(0, 0, 0, 0.3)'
+    });
+    this.$Axios
+      .get(this.$Urls.POST_WMOPERCHECK_OPERORG_INIT, params)
+      .then(res => {
+        setTimeout(() => {
+          loading.close();
+        }, 500);
+        if (res.code === '0000') {
+          this.pageData.operOrgList = res.data.operOrgList;
+          this.pageData.userInfo = res.data.userInfo;
+
+          if (res.data.userInfo.orgNo) {
+            this.detail.orgNos = [];
+            this.detail.orgNos.push(res.data.userInfo.orgNo);
+          }
+        } else {
+          this.$message.error(res.result);
+        }
+      })
+      .catch(() => {
+        loading.close();
+        this.$message.error('初始化页面数据失败！');
+      });
+  }
+  saveEvt() {
+    const params = {
+      orgNos: this.detail.orgNos,
+      csId: this.detail.csId,
+      startDate: this.detail.startDate,
+      endDate: this.detail.endDate,
+      currentPage: this.detail.currentPage,
+      pageSize: this.detail.pageSize
+    };
+    const loading = this.$loading({
+      lock: true,
+      spinner: 'wm-icon-loading',
+      background: 'rgba(0, 0, 0, 0.3)'
+    });
+    this.$Axios
+      .post(this.$Urls.POST_CHECKLOG_QUERYLIST, params)
+      .then(res => {
+        setTimeout(() => {
+          loading.close();
+        }, 500);
+        if (res.code === '0000') {
+          this.config.visible = false;
+          this.callback(true);
+        } else {
+          this.$message.error(res.result);
+        }
+      })
+      .catch(() => {
+        loading.close();
+        this.$message.error('保存失败');
+      });
+  }
+  closeEvt() {
+    this.config.visible = false;
+    this.callback(false);
+  }
+  @Emit()
+  callback(visible: boolean) {
+    return visible;
+  }
+}
 </script>
-<style lang="less" scoped></style>

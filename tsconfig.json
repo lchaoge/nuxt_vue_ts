@@ -40,7 +40,7 @@
     },
     // 设置引入的定义文件
     "types": [
-      "@types/jest",
+      // "@types/jest",
       "@types/node",
       "@nuxt/vue-app"
     ]
@@ -56,7 +56,7 @@
     "components/**/*.ts",
     "components/**/*.tsx",
     "components/**/*.vue",
-    "store/**/*.ts",
+    "store/*.ts",
     "server/**/*.ts",
     "middleware/**/*.ts",
   ],

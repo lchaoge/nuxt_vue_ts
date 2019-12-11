@@ -4,7 +4,7 @@ module.exports = {
    ** Headers of the page
    */
   head: {
-    title: process.env.npm_package_name || '',
+    title: '物美后台管理系统',
     meta: [
       {
         charset: 'utf-8'
@@ -16,7 +16,14 @@ module.exports = {
       {
         hid: 'description',
         name: 'description',
-        content: process.env.npm_package_description || ''
+        content:
+          '物美，多点，多点新鲜，Dmall，多点商城，多点新鲜，生活，服务，生鲜，配送'
+      },
+      {
+        hid: 'keywords',
+        name: 'keywords',
+        content:
+          '物美，多点，多点新鲜，O2O，Dmall，多点商城，多点新鲜，生活，服务，生鲜，配送'
       }
     ],
     link: [
@@ -31,8 +38,8 @@ module.exports = {
    ** Customize the progress-bar color
    */
   loading: {
-    color: '#15bafe',
-    height: '10px'
+    color: '#409EFF',
+    height: '2px'
   },
   /*
    ** Global CSS
