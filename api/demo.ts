@@ -6,11 +6,10 @@ const Urls = {
   POST_MERCHEXHIBIT_EXPORT: '/operplat' + '/pricechgadmin/export' // 页面初始化
 };
 
-export function getPageData(data: any) {
+export function getPageData() {
   return request({
     url: Urls.POST_WMOPERCHECK_OPERORG_INIT,
-    method: 'post',
-    data
+    method: 'post'
   });
 }
 

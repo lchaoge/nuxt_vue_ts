@@ -51,63 +51,49 @@
   </el-dialog>
 </template>
 
-<script>
-import { mapActions, mapGetters } from 'vuex';
-
-export default {
+<script lang="ts">
+import { Vue, Component, Emit } from 'vue-property-decorator';
+import { pricechgadminExport } from '~/api/demo';
+@Component({
   props: {
-    config: {
-      type: Object,
-      required: true
-    }
+    visible: Boolean
   },
-  data() {
-    return {
-      pageData: {
-        title: '导入模板',
-        formLabelWidth: '120px',
-        visible: false
-      },
-      upload: {
-        limit: 1,
-        action: undefined,
-        list: []
-      }
-    };
-  },
-  computed: {
-    ...mapGetters({
-      // 'setLoading'
-    })
-  },
+  watch: {},
+  components: {}
+})
+export default class BuyerListUploadWidget extends Vue {
+  pageData: any = {
+    title: '导入模板',
+    formLabelWidth: '120px',
+    visible: false
+  };
+  upload: any = {
+    limit: 1,
+    action: pricechgadminExport(),
+    list: []
+  };
   mounted() {
     this.pageData.visible = this.visible;
-  },
-  created() {
-    // this.initFunc();
-  },
-  methods: {
-    ...mapActions([
-      // 'setLoading'
-    ]),
-    downloadEvt() {
-      window.location.href = '/static/files/仓位商品库存导入模板.xlsx';
-    },
-    submitUpload() {
-      this.$refs.upload.submit();
-      this.closeEvt();
-    },
-    handleRemove(file, fileList) {
-      // console.log(file, fileList);
-    },
-    handlePreview(file) {
-      // console.log(file);
-    },
-    closeEvt() {
-      this.visible = false;
-      this.$emit('callback');
-    }
   }
-};
+  downloadEvt() {
+    window.location.href = '/files/仓位商品库存导入模板.xlsx';
+  }
+  submitUpload() {
+    this.$refs.upload.submit();
+    this.closeEvt();
+  }
+  handleRemove(file, fileList) {
+    // console.log(file, fileList);
+  }
+  handlePreview(file) {
+    // console.log(file);
+  }
+  closeEvt() {
+    this.visible = false;
+    this.callback();
+  }
+  @Emit()
+  callback(): void {}
+}
 </script>
 <style lang="less" scoped></style>
