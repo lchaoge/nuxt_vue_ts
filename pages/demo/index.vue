@@ -1,5 +1,6 @@
 <template>
   <el-main class="page-demo">
+    <!-- 面包屑 -->
     <section class="wmui-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -7,7 +8,9 @@
         <el-breadcrumb-item>列表名称</el-breadcrumb-item>
       </el-breadcrumb>
     </section>
+    <!-- 面包屑 end -->
 
+    <!-- 搜索条件 -->
     <section class="wmui-condition">
       <el-card shadow="never" :body-style="{ padding: '10px' }">
         <el-form label-position="right" label-width="120px">
@@ -104,7 +107,9 @@
         </el-form>
       </el-card>
     </section>
+    <!-- 搜索条件 end -->
 
+    <!-- 表格部分 -->
     <section class="wmui-table-box">
       <el-row class="wmui-button-box">
         <el-col :lg="12" :md="12" :sm="24" :xs="24">
@@ -219,6 +224,8 @@
         </el-col>
       </el-row>
     </section>
+    <!-- 表格部分 end -->
+
     <dialog-widget
       v-if="dialogObj.visible"
       :config="dialogObj"
@@ -326,13 +333,12 @@ export default class DemoPage extends Vue {
 
   // 初始化页面数据
   initFunc() {
-    const params = {};
     const loading = this.$loading({
       lock: true,
       spinner: 'wm-icon-loading',
       background: 'rgba(0, 0, 0, 0.3)'
     });
-    getPageData(params)
+    getPageData()
       .then((res: any) => {
         setTimeout(() => {
           loading.close();

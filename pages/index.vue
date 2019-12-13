@@ -1,10 +1,12 @@
 <template>
-  <el-main class="page-index">
+  <el-main>
+    <!-- 面包屑 -->
     <section class="wmui-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ name: 'homeLink' }">首页</el-breadcrumb-item>
       </el-breadcrumb>
     </section>
+    <!-- 面包屑 end -->
 
     <section class="wmui-table-box">
       <h1 class="wm-title-h1">物美后台管理系统</h1>
@@ -29,45 +31,16 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+// import { State, Getter, namespace } from 'vuex-class';
 
-@Component({
-  created() {}
-  // props: {}
-})
+@Component({})
 export default class PageIndex extends Vue {
   pageData: any = {
     datetime: new Date()
   };
-  created() {}
+
+  created() {
+    console.log(this.$store.state);
+  }
 }
 </script>
-
-<style lang="scss" scoped>
-.container {
-  margin: 0 auto;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-}
-.title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  display: block;
-  font-weight: 300;
-  font-size: 100px;
-  color: #35495e;
-  letter-spacing: 1px;
-}
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-.links {
-  padding-top: 15px;
-}
-</style>

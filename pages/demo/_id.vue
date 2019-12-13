@@ -1,5 +1,6 @@
 <template>
   <el-main class="page-demo-detail">
+    <!-- 面包屑 -->
     <section class="wmui-breadcrumb">
       <el-breadcrumb separator-class="el-icon-arrow-right">
         <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -10,7 +11,9 @@
         <el-breadcrumb-item>基础详情</el-breadcrumb-item>
       </el-breadcrumb>
     </section>
+    <!-- 面包屑 end -->
 
+    <!-- 详细信息 -->
     <section class="wmui-details">
       <section class="wmui-condition">
         <wm-title
@@ -40,7 +43,6 @@
           >
         </el-row>
       </section>
-
       <section class="wmui-condition mt0">
         <wm-title
           :config="{ title: '退款申请', showLine: false }"
@@ -79,7 +81,6 @@
           >
         </el-row>
       </section>
-
       <section class="wmui-table-box mt0">
         <wm-title
           :config="{ title: '退货商品', showLine: false }"
@@ -125,6 +126,7 @@
         </el-table>
       </section>
     </section>
+    <!-- 详细信息 end -->
   </el-main>
 </template>
 
@@ -206,13 +208,12 @@ export default class DemoPage extends Vue {
 
   // 初始化页面数据
   initFunc() {
-    const params = {};
     const loading = this.$loading({
       lock: true,
       spinner: 'wm-icon-loading',
       background: 'rgba(0, 0, 0, 0.3)'
     });
-    getPageData(params)
+    getPageData()
       .then((res: any) => {
         setTimeout(() => {
           loading.close();
