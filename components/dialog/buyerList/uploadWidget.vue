@@ -52,46 +52,55 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator';
-import { pricechgadminExport } from '~/api/demo';
-@Component({
-  props: {
-    visible: Boolean
-  },
-  watch: {},
-  components: {}
-})
-export default class BuyerListUploadWidget extends Vue {
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator';
+import { getPageData } from '~/api/demo';
+@Component({})
+export default class BatchInvoiceBuyerUploadWidget extends Vue {
+  @Prop({
+    type: Boolean,
+    default: false
+  })
+  visible: boolean;
+
   pageData: any = {
     title: '导入模板',
     formLabelWidth: '120px',
     visible: false
   };
+
   upload: any = {
     limit: 1,
-    action: pricechgadminExport(),
+    action: getPageData(),
     list: []
   };
+
   mounted() {
     this.pageData.visible = this.visible;
   }
+
   downloadEvt() {
     window.location.href = '/files/仓位商品库存导入模板.xlsx';
   }
+
   submitUpload() {
-    this.$refs.upload.submit();
+    const upload: any = this.$refs.upload;
+    upload.submit();
     this.closeEvt();
   }
+
   handleRemove(file, fileList) {
     // console.log(file, fileList);
   }
+
   handlePreview(file) {
     // console.log(file);
   }
+
   closeEvt() {
     this.visible = false;
     this.callback();
   }
+
   @Emit()
   callback(): void {}
 }

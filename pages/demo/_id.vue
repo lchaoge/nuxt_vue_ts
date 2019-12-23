@@ -132,11 +132,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import WmTitle from '~/components/wm-title';
+import WmTitle from '~/components/wmTitle/index.vue';
 import { getPageData, getList } from '~/api/demo';
 
 @Component({
-  name: 'pageDemoDetail',
   components: {
     WmTitle
   }

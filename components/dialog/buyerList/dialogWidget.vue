@@ -13,74 +13,63 @@
       class="form-horizontal"
       label-position="right"
     >
-      <el-form-item label="活动名称" prop="name">
-        <el-input v-model="ruleForm.name" clearable></el-input>
-      </el-form-item>
-      <el-form-item label="活动区域" prop="region">
-        <el-select
-          v-model="ruleForm.region"
+      <el-form-item label="购方名称" prop="name">
+        <el-input
+          v-model="ruleForm.name"
+          placeholder="请输入购方名称"
           clearable
-          filterable
-          placeholder="请选择活动区域"
-        >
-          <el-option
-            v-for="item in pageData.reasonList"
-            :key="item.key"
-            :label="item.value"
-            :value="item.key"
-          ></el-option>
-        </el-select>
+        ></el-input>
       </el-form-item>
-      <el-form-item label="活动时间" required>
-        <el-col :span="11">
-          <el-form-item prop="date1">
-            <el-date-picker
-              v-model="ruleForm.date1"
-              type="date"
-              placeholder="选择日期"
-              style="width: 100%;"
-            ></el-date-picker>
-          </el-form-item>
-        </el-col>
-        <el-col class="tc" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-form-item prop="date2">
-            <el-time-picker
-              v-model="ruleForm.date2"
-              placeholder="选择时间"
-              style="width: 100%;"
-            ></el-time-picker>
-          </el-form-item>
-        </el-col>
+      <el-form-item label="购方纳税人识别号" prop="name">
+        <el-input
+          v-model="ruleForm.name"
+          placeholder="请输入购方纳税人识别号"
+          clearable
+        ></el-input>
       </el-form-item>
-      <el-form-item label="即时配送" prop="delivery">
-        <el-switch v-model="ruleForm.delivery"></el-switch>
+      <el-form-item label="地址、电话">
+        <el-input
+          v-model="ruleForm.name"
+          placeholder="请输入地址、电话"
+          clearable
+        ></el-input>
       </el-form-item>
-      <el-form-item label="活动性质" prop="type">
-        <el-checkbox-group v-model="ruleForm.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
+      <el-form-item label="开户行及账号">
+        <el-input
+          v-model="ruleForm.name"
+          placeholder="请输入开户行及账号"
+          clearable
+        ></el-input>
       </el-form-item>
-      <el-form-item label="特殊资源" prop="resource">
+      <el-form-item label="电子邮箱" prop="name">
+        <el-input
+          v-model="ruleForm.name"
+          placeholder="请输入电子邮箱"
+          clearable
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="手机号">
+        <el-input
+          v-model="ruleForm.name"
+          placeholder="请输入手机号"
+          clearable
+        ></el-input>
+      </el-form-item>
+      <el-form-item label="可用性">
         <el-radio-group v-model="ruleForm.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
+          <el-radio label="是"></el-radio>
+          <el-radio label="否"></el-radio>
         </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式" prop="desc">
-        <el-input v-model="ruleForm.desc" type="textarea"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button
           type="primary"
+          icon="el-icon-document-checked"
           :loading="saveLoading"
-          @click.stop="submitForm('ruleForm')"
-          >立即创建</el-button
+          @click.stop="submitForm()"
+          >保存</el-button
         >
-        <el-button type="info" @click.stop="resetForm('ruleForm')"
+        <el-button type="info" icon="el-icon-refresh" @click.stop="resetForm()"
           >重置</el-button
         >
       </el-form-item>
@@ -88,16 +77,20 @@
   </el-dialog>
 </template>
 <script lang="ts">
-import { Vue, Component, Emit } from 'vue-property-decorator';
+import { Vue, Component, Emit, Prop } from 'vue-property-decorator';
 import { getPageData, getList } from '~/api/demo';
-@Component({
-  props: {
-    config: Object
-  },
-  watch: {},
-  components: {}
-})
-export default class BuyerListDialogWidget extends Vue {
+@Component({})
+export default class BatchInvoiceBuyerDialogWidget extends Vue {
+  @Prop({
+    type: Object
+  })
+  config: {
+    mode: String;
+    visible: Boolean;
+    title: String;
+    data: any;
+  };
+
   saveLoading: boolean = false;
   ruleForm: any = {
     name: undefined,
@@ -109,6 +102,7 @@ export default class BuyerListDialogWidget extends Vue {
     resource: undefined,
     desc: undefined
   };
+
   rules: any = {
     name: [
       { required: true, message: '请输入活动名称', trigger: 'blur' },
@@ -134,6 +128,7 @@ export default class BuyerListDialogWidget extends Vue {
     ],
     desc: [{ required: true, message: '请填写活动形式', trigger: 'blur' }]
   };
+
   pageData: any = {
     formLabelWidth: '120px',
     visible: false,
@@ -152,6 +147,7 @@ export default class BuyerListDialogWidget extends Vue {
       this.ruleForm.grossMarginRatio = this.config.data.grossMarginRatio;
     }
   }
+
   // 初始化页面数据
   initFunc() {
     const loading = this.$loading({
@@ -159,24 +155,21 @@ export default class BuyerListDialogWidget extends Vue {
       spinner: 'wm-icon-loading',
       background: 'rgba(0, 0, 0, 0.3)'
     });
-    getPageData()
-      .then(res => {
-        setTimeout(() => {
-          loading.close();
-        }, 500);
-        if (res.code === '0000') {
-          this.pageData.reasonList = res.data.reasonList;
-        } else {
-          this.$message.error(res.msg);
-        }
-      })
-      .catch(() => {
+    getPageData().then((res: any) => {
+      setTimeout(() => {
         loading.close();
-        this.$message.error('初始化数据失败！');
-      });
+      }, 500);
+      if (res.code === '0000') {
+        this.pageData.reasonList = res.data.reasonList;
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   }
-  submitForm(formName) {
-    this.$refs[formName].validate(valid => {
+
+  submitForm() {
+    const form: any = this.$refs.ruleForm;
+    form.validate(valid => {
       if (valid) {
         this.saveEvt();
       } else {
@@ -185,9 +178,12 @@ export default class BuyerListDialogWidget extends Vue {
       }
     });
   }
-  resetForm(formName) {
-    this.$refs[formName].resetFields();
+
+  resetForm() {
+    const form: any = this.$refs.ruleForm;
+    form.resetFields();
   }
+
   saveEvt() {
     const params = this.ruleForm;
     const loading = this.$loading({
@@ -196,29 +192,25 @@ export default class BuyerListDialogWidget extends Vue {
       background: 'rgba(0, 0, 0, 0.3)'
     });
     this.saveLoading = true;
-    getList(params)
-      .then(res => {
-        setTimeout(() => {
-          loading.close();
-          this.saveLoading = false;
-        }, 500);
-        if (res.code === '0000') {
-          this.config.visible = false;
-          this.callback(true);
-        } else {
-          this.$message.error(res.msg);
-        }
-      })
-      .catch(() => {
+    getList(params).then((res: any) => {
+      setTimeout(() => {
         loading.close();
         this.saveLoading = false;
-        this.$message.error('保存失败');
-      });
+      }, 500);
+      if (res.code === '0000') {
+        this.config.visible = false;
+        this.callback(true);
+      } else {
+        this.$message.error(res.msg);
+      }
+    });
   }
+
   closeEvt() {
     this.config.visible = false;
     this.callback(false);
   }
+
   @Emit()
   callback(visible: boolean) {
     return visible;

@@ -42,7 +42,7 @@
     "types": [
       // "@types/jest",
       "@types/node",
-      "@nuxt/vue-app"
+      // "@nuxt/vue-app"
     ]
   },
   // ts 管理的文件
