@@ -4,15 +4,17 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-@Component({
-  props: {
-    config: Object
-  },
-  watch: {},
-  components: {}
-})
-export default class WmTitleWidget extends Vue {}
+import { Vue, Component, Prop } from 'vue-property-decorator';
+@Component({})
+export default class WmTitleWidget extends Vue {
+  @Prop({
+    type: Object
+  })
+  config: {
+    title: String;
+    showLine: Boolean;
+  };
+}
 </script>
 <style lang="less" scoped>
 .wm-title-box {

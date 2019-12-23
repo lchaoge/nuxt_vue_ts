@@ -241,14 +241,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import WmTitle from '~/components/wm-title';
-import DialogWidget from '~/components/dialog/buyerList/dialogWidget';
-import UploadWidget from '~/components/dialog/buyerList/uploadWidget';
+import WmTitle from '~/components/wmTitle/index.vue';
+import DialogWidget from '~/components/dialog/buyerList/dialogWidget.vue';
+import UploadWidget from '~/components/dialog/buyerList/uploadWidget.vue';
 import { getPageData, getList, pricechgadminExport } from '~/api/demo';
-import Pagination from '~/models/pagination';
+import { Pagination } from '~/models/pagination';
 
 @Component({
-  name: 'pageDemo',
   components: {
     WmTitle,
     DialogWidget,

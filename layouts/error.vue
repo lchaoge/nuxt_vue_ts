@@ -30,7 +30,8 @@ import { Component, Vue } from 'vue-property-decorator';
 })
 export default class LayoutsError extends Vue {
   goHome() {
-    this.$router.push({ path: '/' });
+    const that: any = this;
+    that.$router.push({ path: '/' });
   }
 }
 </script>

@@ -3,6 +3,7 @@ import { Message, Notification } from 'element-ui'; // 这里使用了element-ui
 
 // axios.defaults.headers['X-Requested-With'] = 'XMLHttpRequest'
 axios.defaults.headers.post['Content-Type'] = 'application/json';
+// axios.defaults.withCredentials = true; // 携带cookie
 
 const service = axios.create({
   // baseURL: '/',
@@ -21,11 +22,16 @@ service.interceptors.request.use(
 
 // 响应拦截 对响应消息作初步的处理
 service.interceptors.response.use(
-  response => {
+  (response: any) => {
     if (response.status === 200 && response.data.code === '0000') {
       return response.data;
     } else {
-      if (response.data.code !== '0000') {
+      if (`${response.data}`.indexOf('window.open')) {
+        return {
+          code: 401,
+          msg: '未授权，请重新登录'
+        };
+      } else if (response.data.code !== '0000') {
         Message({
           type: 'error',
           message: response.data.msg,

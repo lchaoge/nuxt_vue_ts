@@ -84,30 +84,19 @@ module.exports = {
     proxy: true
   },
   proxy: {
-    '/wmInvoice': {
-      target: 'http://dev-invoice.wumart.com/',
-      changeOrigin: true,
-      pathRewrite: {
-        '^/wmInvoice': ''
-      }
-    },
-    // 携出单
-    '/operplat': {
-      target: 'http://qa-operplat.wumart.com/',
+    // 盘点
+    '/wmOperCheck': {
+      target:
+        process.env.NODE_ENV === 'production'
+          ? 'http://dev-oper-check.wumart.com'
+          : process.env.NODE_ENV === 'development'
+          ? 'http://dev-oper-check.wumart.com'
+          : 'http://dev-oper-check.wumart.com',
       //  secure: true,
       changeOrigin: true,
       pathRewrite: {
-        '^/operplat': ''
+        '^/wmOperCheck': ''
       }
-    },
-    '/api': {
-      target:
-        process.env.NODE_ENV === 'production'
-          ? 'http://server.kooshua.com'
-          : process.env.NODE_ENV === 'development'
-          ? 'http://test.kslab.com'
-          : 'http://test.kslab.com', // api主机
-      changeOrigin: true
     }
   },
   /*
@@ -120,6 +109,6 @@ module.exports = {
     devtools: true,
     transpile: [/^element-ui/],
     vendor: ['@nuxtjs/axios', '@nuxtjs/proxy', 'element-ui'],
-    extend(config, ctx) {}
+    extend(config: any, ctx: any) {}
   }
 };
